@@ -31,7 +31,7 @@
 
 .card-img img {
 	border-radius: 10px;
-		object-fit: cover;
+		object-fit: contain;
 		width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
 		height: 100%; /* Mantiene la proporción de la imagen */
 

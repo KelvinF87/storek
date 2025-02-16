@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import  DetailsProducto  from "./pages/DetailsProducto";
 import CheckoutPage from "./pages/CheckoutPage";
+import Admin from "./pages/Admin";
 
 function App() {
 	const URL_API = "http://localhost:3000";
@@ -50,6 +51,7 @@ function App() {
 						/>
 					}
 				/>
+				<Route path="/dashboard" element={<Admin />} ></Route>
 				<Route path="/details/:productoid"  element={<DetailsProducto/>} />
 				<Route path="/checkoutpage/:idcar" element={<CheckoutPage />} /> 
 			</Routes>

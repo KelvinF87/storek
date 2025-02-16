@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dataFondo from "../assets/sep09.jpg";
+import dataFondo from "../assets/fondoOt.jpg";
 import ListProduct from "./ListProducts";
 import { useDataFetch } from "./DataImport";
 const links = [
@@ -77,10 +77,10 @@ export default function Header({ data }) {
 		<div className="mx-auto max-w-7xl px-6 lg:px-8">
 		  <div className="mx-auto max-w-2xl lg:mx-0">
 			<h2 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
-			  Kupones
+			  Kupo-Next
 			</h2>
 			<p className="mt-8 text-lg font-medium text-pretty text-gray-300 sm:text-xl/8">
-			  Bienvenido a Kupones, tu destino número uno para descubrir cupones
+			  Bienvenido a Kupo-Next, tu destino número uno para descubrir cupones
 			  y ofertas exclusivas que te permitirán ahorrar en todo lo que
 			  deseas.
 			</p>
