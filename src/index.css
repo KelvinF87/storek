@@ -1,0 +1,42 @@
+@import "tailwindcss";
+.btn-car{
+	border: none;
+	border-radius: 20px;
+	background-color: antiquewhite;
+	padding: 10px;
+	transition: all 0.7s;
+}
+.btn-car:hover{
+	background-color: #6bff8d;
+}
+.container-details{
+	display: flex;
+	width: 99Vw;
+	height: 100Vh;
+	/* flex-direction: column; */
+	
+	align-items: center;
+	overflow-y: auto;
+	
+}
+.card-img {
+	padding: 10px;
+		width: 100%;
+		max-width: 500px;
+		height: 400px;
+		box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total */
+		/* background-color: #6bff8d; */
+		border-radius: 10px;
+}
+
+.card-img img {
+	border-radius: 10px;
+		object-fit: cover;
+		width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
+		height: 100%; /* Mantiene la proporción de la imagen */
+
+
+}
+.aside-container{
+	width: 50Vw;
+}
