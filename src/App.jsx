@@ -10,7 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import Admin from "./pages/Admin";
 
 function App() {
-	const URL_API = import.meta.env.VITE_URL_APIK;
+	const URL_API = import.meta.env.VITE_URL_APIR;
 	const [notifica_Car, setNotiCar] = useState(0);
 	const [carrito, setCarrito] = useState({});
 	const [productos, setProductos] = useState({});
