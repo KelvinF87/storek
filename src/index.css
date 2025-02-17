@@ -19,6 +19,7 @@
 	overflow-y: auto;
 	background-color:#f6f3f4 ;
 	justify-content: center;
+	flex-wrap: wrap;
 
 	
 }
