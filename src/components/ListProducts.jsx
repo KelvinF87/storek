@@ -8,6 +8,8 @@ export default function ListProduct() {
   const [miData, setMiData] = useState([]);
   const { addToCart } = useAddCar();
   const [showBanner, setShowBanner] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
 
   useEffect(() => {
     if (!loading && data) {
@@ -23,13 +25,19 @@ export default function ListProduct() {
     }, 3000);
   };
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = miData.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error al cargar los datos</div>;
 
   return (
     <div className="bg-white">
       {showBanner && (
-        <div className="z-100 fixed top-0 left-0 w-full bg-green-500 text-white text-center py-2">
+        <div className="fixed top-0 left-0 w-full bg-green-500 text-white text-center py-2 z-10">
           ¡Producto añadido al carrito!
         </div>
       )}
@@ -37,7 +45,7 @@ export default function ListProduct() {
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Ofertas</h2>
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {miData.map((product) => (
+          {currentProducts.map((product) => (
             <div key={product.id} className="group relative">
               <img
                 alt={product.imageAlt}
@@ -61,6 +69,22 @@ export default function ListProduct() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+          >
+            Anterior
+          </button>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={indexOfLastProduct >= miData.length}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+          >
+            Siguiente
+          </button>
         </div>
       </div>
     </div>

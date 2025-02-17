@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Login from "../components/Login"
-import ProductList from "../components/ProducList"
+import ProductList from "../components/ProducAdminList"
 
 function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
