@@ -7,23 +7,16 @@ import { useAddCar } from './AddCar';
 import { useNavigate } from 'react-router-dom';
 
 export default function ShoppingCartModal({ isOpen, onClose }) {
-  const { dataCar, removeFromCart, totalPagar, setTotalPagar } = useAddCar();
+  const { dataCar, removeFromCart, totalPagar, setTotalPagar, increaseQuantity, decreaseQuantity } = useAddCar();
   const navigate = useNavigate();
 
   useEffect(() => {
 	console.log("desde el carro ", dataCar);
+	// setTotalPagar(prevToltalPagar=>prevToltalPagar)
   }, [dataCar]);
 
-  const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price.replace('$', '')), 0);
-
-  useEffect(() => {
-	setTotalPagar(subtotal);
-	console.log("aPagar", totalPagar);
-	console.log(subtotal)
-  }, [subtotal, setTotalPagar,dataCar]);
-
-  const procesarPago = (idCar) => {
-	navigate(`/checkoutpage/${idCar}`);
+  const procesarPago = () => {
+	navigate(`/checkoutpage/pending`);
   };
 
   return (
@@ -64,7 +57,11 @@ export default function ShoppingCartModal({ isOpen, onClose }) {
 							  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
 
 							  <div className="flex flex-1 items-end justify-between text-sm">
-								<p className="text-gray-500">Cantidad: {product.quantity}</p>
+								<div className="flex items-center">
+								  <button onClick={() => decreaseQuantity(product.id)} className="text-gray-500 hover:text-gray-700">-</button>
+								  <span className="mx-2">{product.quantity}</span>
+								  <button onClick={() => increaseQuantity(product.id)} className="text-gray-500 hover:text-gray-700">+</button>
+								</div>
 								<button
 								  onClick={() => removeFromCart(product.id)}
 								  className="font-medium text-red-600 hover:text-red-500"
@@ -84,11 +81,11 @@ export default function ShoppingCartModal({ isOpen, onClose }) {
 				  <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 					<div className="flex justify-between text-base font-medium text-gray-900">
 					  <p>Subtotal</p>
-					  <p>${subtotal.toFixed(2)}</p>
+					  <p>${totalPagar.toFixed(2)}</p>
 					</div>
 					<p className="mt-0.5 text-sm text-gray-500">Los impuestos y el envío se calculan al finalizar la compra.</p>
 					<div className="mt-6">
-					  <button onClick={() => procesarPago(1)} className="flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 w-full text-white font-medium shadow-sm hover:bg-indigo-700">
+					  <button onClick={procesarPago} className="flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 w-full text-white font-medium shadow-sm hover:bg-indigo-700">
 						Proceder al pago
 					  </button>
 					</div>

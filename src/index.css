@@ -17,6 +17,9 @@
 	
 	align-items: center;
 	overflow-y: auto;
+	background-color:#f6f3f4 ;
+	justify-content: center;
+
 	
 }
 .card-img {
@@ -40,3 +43,6 @@
 .aside-container{
 	width: 50Vw;
 }
+.aside-checkout{
+	background-color:#f6f3f4 ;
+} 

@@ -2,20 +2,22 @@ import { useState, useEffect } from "react";
 
 export const useAddCar = () => {
   const [loadingCar, setLoadingCar] = useState(true);
-  const [totalPagar, setTotalPagar] = useState(null);
+  const [totalPagar, setTotalPagar] = useState(0);
   const [dataCar, setDataCar] = useState(() => {
     try {
       const storedData = JSON.parse(localStorage.getItem("LisCar")) || [];
-      setLoadingCar(false); // Establecer loadingCar en false después de cargar los datos
+      setLoadingCar(false);
       return storedData;
     } catch {
-      setLoadingCar(false); // Establecer loadingCar en false en caso de error
+      setLoadingCar(false);
       return [];
     }
   });
 
   useEffect(() => {
     localStorage.setItem("LisCar", JSON.stringify(dataCar));
+    const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price.replace('$', '')) * item.quantity, 0);
+    setTotalPagar(subtotal);
   }, [dataCar]);
 
   const addToCart = (product) => {
@@ -34,5 +36,21 @@ export const useAddCar = () => {
     setDataCar((prevData) => prevData.filter((item) => item.id !== id));
   };
 
-  return { dataCar, setDataCar, addToCart, removeFromCart, loadingCar, totalPagar, setTotalPagar };
+  const increaseQuantity = (id) => {
+    setDataCar((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (id) => {
+    setDataCar((prevData) =>
+      prevData.map((item) =>
+        item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+      ).filter((item) => item.quantity > 0)
+    );
+  };
+
+  return { dataCar, setDataCar, addToCart, removeFromCart, loadingCar, totalPagar, setTotalPagar, increaseQuantity, decreaseQuantity };
 };
