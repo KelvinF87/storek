@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import ShoppingCartModal from "./ShoppingCartModal";
 
 
