@@ -34,7 +34,8 @@ function App() {
 	return (
 		<>
 			<NavBar />
-			<Routes>
+			<Routes>	
+				<Route path="/checkoutpage/:idcar" element={<CheckoutPage />} /> 
 				<Route
 					path="/"
 					element={
@@ -53,7 +54,7 @@ function App() {
 				/>
 				<Route path="/dashboard" element={<Admin />} ></Route>
 				<Route path="/details/:productoid"  element={<DetailsProducto/>} />
-				<Route path="/checkoutpage/:idcar" element={<CheckoutPage />} /> 
+			
 			</Routes>
 			<Footer />
 		</>

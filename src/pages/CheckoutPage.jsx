@@ -138,19 +138,9 @@ const CheckoutPage = () => {
 
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex items-center">
-                          <button
-                            onClick={() => decreaseQuantity(product.id)}
-                            className="text-gray-500 hover:text-gray-700"
-                          >
-                            -
-                          </button>
-                          <span className="mx-2">{product.quantity}</span>
-                          <button
-                            onClick={() => increaseQuantity(product.id)}
-                            className="text-gray-500 hover:text-gray-700"
-                          >
-                            +
-                          </button>
+                     
+                          <span className="mx-2">Cantidad: {product.quantity} x {product.price} = {parseFloat(product.quantity) * parseFloat(product.price)}  </span>
+                    
                         </div>
                         <button
                           onClick={() => removeFromCart(product.id)}
