@@ -1,2 +1,4 @@
-/*    /index.html   200
-/404  /index.html   404
+[[redirects]]
+from = "/*"
+to= "/index.html"
+status= 404
