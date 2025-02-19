@@ -26,7 +26,7 @@ export default function Header() {
   };
   const ofertasDestacadas = () => {
     const filtrados = inicio.filter(item => item.viewCount > 100);
-    return filtrados.length; // Devuelve el conteo de los elementos filtrados
+    return filtrados.length + "💣 "; // Devuelve el conteo de los elementos filtrados
 };
   const stats = [
 	{ name: "Ofertas destacadas", value: ofertasDestacadas() },
