@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import enviando from "../assets/Ok-enviado.gif";
 import { useProducts } from "../Hooks/useProducts";
 import { useDataFetch } from "../Hooks/DataImport";
-
+const MONEDA = import.meta.env.VITE_MONEDA
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const [showEnviando, setShowEnviando] = useState(false);
@@ -25,7 +25,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     setTotal(totalPagar);
-    console.log("el total ", parseFloat(totalPagar));
+    // console.log("el total ", parseFloat(totalPagar));
   }, [totalPagar, dataCar]);
 
   const pagar = async () => {
@@ -130,7 +130,7 @@ const CheckoutPage = () => {
           <div className="mb-6">
             <h2 className="text-lg font-semibold mb-4">Resumen del Pedido</h2>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-gray-700">Total: {total.toFixed(2)}€</p>
+              <p className="text-gray-700">Total: {total.toFixed(2)}{MONEDA}</p>
             </div>
           </div>
           <button
@@ -162,7 +162,7 @@ const CheckoutPage = () => {
                     <div className="ml-4 flex flex-1 flex-col">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>{product.name}</h3>
-                        <p className="ml-4">{product.price}</p>
+                        <p className="ml-4">{product.price}{MONEDA}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
                         {product.color}
@@ -170,7 +170,7 @@ const CheckoutPage = () => {
 
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex items-center">
-                          <span className="mx-2">Cantidad: {product.quantity} x {product.price} = {parseFloat(product.quantity) * parseFloat(product.price)}  </span>
+                          <span className="mx-2">Cantidad: {product.quantity} x {product.price}{MONEDA} = {parseFloat(product.quantity) * parseFloat(product.price)}{MONEDA} </span>
                         </div>
                         <button
                           onClick={() => removeFromCart(product.id)}

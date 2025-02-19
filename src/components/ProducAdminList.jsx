@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductForm from "./ProductForm";
 import { useProducts } from "../Hooks/useProducts";
-
+const MONEDA = import.meta.env.VITE_MONEDA
 export default function ProductList({ onLogout }) {
 	const { data, loading, error, createProduct, updateProduct, deleteProduct } = useProducts("productos");
 	const [products, setProducts] = useState([]);
@@ -106,7 +106,7 @@ export default function ProductList({ onLogout }) {
 									/>
 									<h2 className="text-lg font-semibold">{product.name}</h2>
 									<p className="text-gray-600 mb-2">{product.description}</p>
-									<p className="text-xl font-bold mb-2">{product.price} | Cantidad: {product.quantity}</p>
+									<p className="text-xl font-bold mb-2">{product.price}{MONEDA} | Cantidad: {product.quantity}</p>
 									<div className="mt-auto flex justify-between">
 										<button
 											onClick={() => setEditingProduct(product)}

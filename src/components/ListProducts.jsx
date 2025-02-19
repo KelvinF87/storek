@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDataFetch } from "../Hooks/DataImport";
 import { Link } from "react-router-dom";
 import { useAddCar } from "../Hooks/AddCar";
-
+const MONEDA = import.meta.env.VITE_MONEDA
 export default function ListProduct() {
   const { data, loading, error } = useDataFetch("productos");
   const [miData, setMiData] = useState([]);
@@ -91,7 +91,7 @@ export default function ListProduct() {
 				  </p>
 				</div>
 				<p className="text-sm font-medium text-gray-900">
-				  {product.price}
+				  {product.price}{MONEDA}
 				</p>
 			  </div>
 			  <div className="flex flex-col items-center mt-2">
