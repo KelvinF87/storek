@@ -36,7 +36,7 @@ export default function ShoppingCartModal({ isOpen, onClose }) {
 			
 			miCan = oneData.quantity>cantidad && cantidad+1;
 			miCan==false && (miCan = parseInt(oneData.quantity))
-			console.log(miCan);
+			// console.log(miCan);
 		}	
 		
 	})
@@ -45,7 +45,7 @@ export default function ShoppingCartModal({ isOpen, onClose }) {
   const restaCantidad = (id, cantidad) => {
 	const theData =[...data]
 	let miCan = cantidad == 1 ? cantidad : cantidad - 1;
-	console.log(miCan);
+	// console.log(miCan);
 	decreaseQuantity(id);
 	
   };

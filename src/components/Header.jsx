@@ -19,7 +19,7 @@ export default function Header() {
   }, [data]);
 
   useEffect(() => {
-	console.log(inicio, "max ", ofertasHoy());
+	// console.log(inicio, "max ", ofertasHoy());
   }, [inicio]);
   const ofertasHoy = () => {
 	return inicio.length;
