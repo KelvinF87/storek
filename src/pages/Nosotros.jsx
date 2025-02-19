@@ -13,7 +13,7 @@ export default function Nosotros() {
 				En Kupo-Next, nos dedicamos a ofrecerte las mejores ofertas y descuentos en una amplia variedad de productos y servicios. Nuestro objetivo es ayudarte a ahorrar dinero sin comprometer la calidad.
 			</p>
 			<p>
-				¡Únete a nuestra comunidad y mantente al día con las últimas ofertas y promociones! ¡Empieza a ahorrar hoy mismo con Kupo-Next!
+				¡Únete a nuestra comunidad y mantente al día con las últimas ofertas y promociones! ¡Empieza a ahorrar hoy mismo con Kupo-Next.!
 			</p>
 		</div>
 	);
