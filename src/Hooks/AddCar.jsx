@@ -16,7 +16,8 @@ export const useAddCar = () => {
 
 	useEffect(() => {
 		localStorage.setItem("LisCar", JSON.stringify(dataCar));
-		const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price.replace('$', '')) * item.quantity, 0);
+		// const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price.replace('$', '')) * item.quantity, 0);
+		const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
 		setTotalPagar(subtotal);
 	}, [dataCar]);
 

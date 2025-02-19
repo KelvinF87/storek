@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useAddCar } from "../components/AddCar";
+import { useAddCar } from "../Hooks/AddCar";
 import { useNavigate } from "react-router";
 import enviando from "../assets/Ok-enviado.gif";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useProducts } from "../Hooks/useProducts";
+import { useDataFetch } from "../Hooks/DataImport";
 
 const CheckoutPage = () => {
-  //   const { totalPagar,dataCar } = useAddCar();
   const navigate = useNavigate();
   const [showEnviando, setShowEnviando] = useState(false);
+  const [error, setError] = useState(null);
   const {
     setDataCar,
     dataCar,
@@ -23,30 +18,67 @@ const CheckoutPage = () => {
     increaseQuantity,
     decreaseQuantity,
   } = useAddCar();
+  const { data, setData, loading, setLoading } = useDataFetch("productos");
   const [total, setTotal] = useState(0);
+
+  const { updateProduct } = useProducts("productos");
 
   useEffect(() => {
     setTotal(totalPagar);
-    console.log("el total ", totalPagar);
+    console.log("el total ", parseFloat(totalPagar));
   }, [totalPagar, dataCar]);
 
-  const pagar = () => {
+  const pagar = async () => {
     setShowEnviando(true);
-    setTimeout(() => {
-      setTotalPagar(0);
-      setTotal(0);
-      setDataCar([]);
-      //   alert("Pago realizado con exito");
+    setError(null);
+
+    try {
+      // Actualizar la cantidad de cada producto en el carrito
+      for (const product of dataCar) {
+        // Buscar el producto en los datos del servidor
+        const serverProduct = data.find((miData) => miData.id === product.id);
+
+        if (serverProduct) {
+          // Calcular la nueva cantidad restando la cantidad vendida
+          const updatedQuantity = serverProduct.quantity - product.quantity;
+
+          // Crear un objeto con la nueva cantidad
+          const updatedProduct = {
+            ...serverProduct,
+            quantity: updatedQuantity,
+          };
+
+          // Enviar la actualización al servidor
+          await updateProduct(updatedProduct);
+        }
+      }
+
+      // Vaciar el carrito en el almacenamiento local
+      localStorage.removeItem("LisCar");
+
+      setTimeout(() => {
+        setTotalPagar(0);
+        setTotal(0);
+        setDataCar([]);
+        setShowEnviando(false);
+        navigate("/");
+      }, 3500);
+    } catch (err) {
+      setError("Error al procesar el pago. Por favor, inténtalo de nuevo.");
       setShowEnviando(false);
-      navigate("/");
-    }, 3500);
+    }
   };
 
   return (
     <div className="container-details">
       {showEnviando && (
         <div className="enviando-pago">
-          <img src={enviando} alt="" />
+          <img src={enviando} alt="Enviando pago" />
+        </div>
+      )}
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
         </div>
       )}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -138,9 +170,7 @@ const CheckoutPage = () => {
 
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex items-center">
-                     
                           <span className="mx-2">Cantidad: {product.quantity} x {product.price} = {parseFloat(product.quantity) * parseFloat(product.price)}  </span>
-                    
                         </div>
                         <button
                           onClick={() => removeFromCart(product.id)}

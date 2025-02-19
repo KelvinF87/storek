@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductForm from "./ProductForm";
-import { useProducts } from "./useProducts";
+import { useProducts } from "../Hooks/useProducts";
 
 export default function ProductList({ onLogout }) {
 	const { data, loading, error, createProduct, updateProduct, deleteProduct } = useProducts("productos");

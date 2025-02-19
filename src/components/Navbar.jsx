@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
   Menu,
-  MenuButton,
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
@@ -27,6 +26,7 @@ export default function NavBar() {
   const [contCar, setConCar] = useState(0);
   const [isCartOpen, setCartOpen] = useState(false);
   const [cartKey, setCartKey] = useState(0);
+  const location = useLocation();
 
   const toggleCart = () => {
     setCartOpen(!isCartOpen);
@@ -34,8 +34,8 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-    setConCar(JSON.parse(localStorage.getItem("LisCar")).length);
-    // console.log( JSON.parse( localStorage.getItem("LisCar")).length)
+    const storedData = JSON.parse(localStorage.getItem("LisCar"));
+    setConCar(storedData ? storedData.length : 0);
   }, [localStorage.getItem("LisCar")]);
 
   return (
@@ -120,11 +120,13 @@ export default function NavBar() {
         </div>
       </div>
 
-	{  !location.pathname.startsWith("/checkoutpage") &&   <ShoppingCartModal
-        key={cartKey}
-        isOpen={isCartOpen}
-        onClose={toggleCart}
-      />}
+      {!location.pathname.startsWith("/checkoutpage") && (
+        <ShoppingCartModal
+          key={cartKey}
+          isOpen={isCartOpen}
+          onClose={toggleCart}
+        />
+      )}
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">

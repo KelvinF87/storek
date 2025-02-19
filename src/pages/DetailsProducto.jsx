@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import imagen from "../assets/logoKupones.png";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDataFetch } from "../components/DataImport";
-import { useAddCar } from "../components/AddCar";
+import { useDataFetch } from "../Hooks/DataImport";
+import { useAddCar } from "../Hooks/AddCar";
 
 export default function DetailsProducto() {
   const { data, loading, error } = useDataFetch("productos");

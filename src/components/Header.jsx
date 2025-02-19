@@ -1,45 +1,39 @@
 import { useEffect, useState } from "react";
 import dataFondo from "../assets/fondoOt.jpg";
 import ListProduct from "./ListProducts";
-import { useDataFetch } from "./DataImport";
+import { useDataFetch } from "../Hooks/DataImport";
 const links = [
   { name: "Nuestras Ofertas:", href: "#" },
   { name: "Nuestra Comunidad", href: "#" },
   { name: "Conoce Más:", href: "#" },
   //   { name: "Meet our leadership", href: "#" },
 ];
-const stats = [
-  { name: "Ofertas destacadas", value: "12" },
-  { name: "Ofertas hoy", value: "300+" },
-  //   { name: "Hours per week", value: "40" },
-  //   { name: "Paid time off", value: "Unlimited" },
-];
 
-export default function Header({ data }) {
-  const {
-	carrito,
-	setCarrito,
-	productos,
-	setProductos,
-	endPoint,
-	setEndPoint,
-	cargadoData,
-  } = data;
+export default function Header() {
+  const { data, loading, setLoading, setEndpoint } = useDataFetch("productos");
+  const [inicio, setInicio] = useState(data);
 
-  //   useEffect(() => {
-  // 	  setEndPoint("productos")
+  useEffect(() => {
+	setEndpoint("productos");
+	setInicio(data);
+  }, [data]);
 
-  // 	  // setProductos({item: "Ordenador"})
-
-  // 	}, []);
-  const [myData, setMyData] = useState(null);
-
-//   useEffect(() => {
-//     console.log(cargadoData);
-//     console.log(endPoint, "hola");
-//     console.log(productos);
-//     //   setMyData(productos)
-//   }, [cargadoData]);
+  useEffect(() => {
+	console.log(inicio, "max ", ofertasHoy());
+  }, [inicio]);
+  const ofertasHoy = () => {
+	return inicio.length;
+  };
+  const ofertasDestacadas = () => {
+    const filtrados = inicio.filter(item => item.viewCount > 100);
+    return filtrados.length; // Devuelve el conteo de los elementos filtrados
+};
+  const stats = [
+	{ name: "Ofertas destacadas", value: ofertasDestacadas() },
+	{ name: "Ofertas hoy", value: ofertasHoy() },
+	//   { name: "Hours per week", value: "40" },
+	//   { name: "Paid time off", value: "Unlimited" },
+  ];
 
   return (
 	<>
@@ -80,9 +74,9 @@ export default function Header({ data }) {
 			  Kupo-Next
 			</h2>
 			<p className="mt-8 text-lg font-medium text-pretty text-gray-300 sm:text-xl/8">
-			  Bienvenido a Kupo-Next, tu destino número uno para descubrir cupones
-			  y ofertas exclusivas que te permitirán ahorrar en todo lo que
-			  deseas.
+			  Bienvenido a Kupo-Next, tu destino número uno para descubrir
+			  cupones y ofertas exclusivas que te permitirán ahorrar en todo lo
+			  que deseas.
 			</p>
 		  </div>
 		  <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
@@ -106,7 +100,7 @@ export default function Header({ data }) {
 		  </div>
 		</div>
 	  </div>
-	   <ListProduct />
+	  <ListProduct />
 	</>
   );
 }

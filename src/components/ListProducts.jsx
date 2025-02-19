@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDataFetch } from "./DataImport";
+import { useDataFetch } from "../Hooks/DataImport";
 import { Link } from "react-router-dom";
-import { useAddCar } from "./AddCar";
+import { useAddCar } from "../Hooks/AddCar";
 
 export default function ListProduct() {
 	const { data, loading, error } = useDataFetch("productos");
@@ -23,11 +23,19 @@ export default function ListProduct() {
 			id: product.id,
 			name: product.name,
 			imageSrc: product.imageSrc,
+			quantity:product.quantity,
+			color:product.color,
+			imageAlt:product.imageAlt,
+			description:product.description,
+			updatedAt:product.updatedAt,
+			companyId: product.companyId,
+			purchaseCount: product.purchaseCount,
+			viewCount: product.viewCount,
 		});
 		setShowBanner(true);
 		setTimeout(() => {
 			setShowBanner(false);
-		}, 3000);
+		}, 2000);
 	};
 
 	const indexOfLastProduct = currentPage * productsPerPage;
@@ -50,7 +58,7 @@ export default function ListProduct() {
 				<h2 className="text-2xl font-bold tracking-tight text-gray-900">
 					Ofertas
 				</h2>
-			 <input type="text" onChange={""} placeholder="Buscar..." className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+			 <input type="text"  placeholder="Buscar..." className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
 
 
 				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

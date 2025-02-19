@@ -6,7 +6,7 @@ export default function ProductForm({ product, onSubmit, onCancel }) {
 	const [formData, setFormData] = useState({
 		name: "",
 		color: "",
-		price: "",
+		price: 0,
 		quantity: 1,
 		imageSrc: "",
 		imageAlt: "",
@@ -36,7 +36,7 @@ export default function ProductForm({ product, onSubmit, onCancel }) {
 			setFormData({
 				name: "",
 				color: "",
-				price: "",
+				price: 0,
 				quantity: 1,
 				imageSrc: "",
 				imageAlt: "",

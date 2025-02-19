@@ -8,9 +8,9 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useAddCar } from "./AddCar";
+import { useAddCar } from "../Hooks/AddCar";
 import { useNavigate } from "react-router-dom";
-import { useDataFetch } from "./DataImport";
+import { useDataFetch } from "../Hooks/DataImport";
 
 export default function ShoppingCartModal({ isOpen, onClose }) {
   const {
