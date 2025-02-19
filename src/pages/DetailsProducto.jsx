@@ -104,7 +104,7 @@ export default function DetailsProducto() {
         <div>
           <button
             onClick={goBack}
-            className="bg-white px-4 py-3 hover:bg-blue-200 text-black font-bold py-2"
+            className="bg-white px-4 p-3 hover:bg-blue-200 text-black font-bold py-2"
           >
             ⬅️ Volver
           </button>
