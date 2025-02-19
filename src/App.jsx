@@ -8,8 +8,9 @@ import axios from "axios";
 import  DetailsProducto  from "./pages/DetailsProducto";
 import CheckoutPage from "./pages/CheckoutPage";
 import Admin from "./pages/Admin";
-import About from "./pages/about";
+
 import Contact from "./pages/Contacts";
+import Nosotros from "./pages/about";
 
 function App() {
 	const URL_API = import.meta.env.VITE_URL_APIR;
@@ -56,7 +57,8 @@ function App() {
 				/>
 				<Route path="/dashboard" element={<Admin />} ></Route>
 				<Route path="/details/:productoid"  element={<DetailsProducto/>} />
-				<Route path="/nosotros"  element={<About/>} />
+				<Route path="/nosotros"  element={<Nosotros
+				/>} />
 				<Route path="/contacto"  element={<Contact/>} />
 			
 			</Routes>
