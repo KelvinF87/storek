@@ -71,7 +71,7 @@ export default function Header() {
 		<div className="mx-auto max-w-7xl px-6 lg:px-8">
 		  <div className="mx-auto max-w-2xl lg:mx-0">
 			<h2 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
-			  Kupo-Next
+			  Kupo-<span className="titulo">Next</span>
 			</h2>
 			<p className="mt-8 text-lg font-medium text-pretty text-gray-300 sm:text-xl/8">
 			  Bienvenido a Kupo-Next, tu destino número uno para descubrir

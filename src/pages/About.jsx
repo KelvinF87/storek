@@ -1,68 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import NavBar from "./components/Navbar";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import DetailsProducto from "./pages/DetailsProducto";
-import CheckoutPage from "./pages/CheckoutPage";
-import Admin from "./pages/Admin";
+import React from 'react';
+import logo from '../assets/logo.png'
 
-function App() {
-  const URL_API = import.meta.env.VITE_URL_APIR;
-  const [notifica_Car, setNotiCar] = useState(0);
-  const [carrito, setCarrito] = useState({});
-  const [productos, setProductos] = useState({});
-  const [endPoint, setEndPoint] = useState("productos");
-  const [cargadoData, setCargandoData] = useState(true);
-  const [showCartButton, setShowCartButton] = useState(true); // Nuevo estado
+const About = () => {
+	return (
+		<div className="max-w-2xl mx-auto p-4 text-center h-full">
+			<img className='w-md mx-auto' src={logo} alt="logo" />
+			<h1 className="text-3xl font-bold mb-4">Acerca de Nosotros</h1>
+			<p className="mb-4">
+				Bienvenido a Kupo-Next, tu destino número uno para descubrir cupones y ofertas exclusivas que te permitirán ahorrar en todo lo que desees.
+			</p>
+			<p className="mb-4">
+				En Kupo-Next, nos dedicamos a ofrecerte las mejores ofertas y descuentos en una amplia variedad de productos y servicios. Nuestro objetivo es ayudarte a ahorrar dinero sin comprometer la calidad.
+			</p>
+			<p>
+				¡Únete a nuestra comunidad y mantente al día con las últimas ofertas y promociones! ¡Empieza a ahorrar hoy mismo con Kupo-Next!
+			</p>
+		</div>
+	);
+};
 
-  useEffect(() => {
-    const getDataDb = () => {
-      axios
-        .get(`${URL_API}/${endPoint}`)
-        .then((response) => {
-          setProductos(response.data);
-          setCargandoData(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    getDataDb();
-  }, [productos, endPoint]);
-
-  return (
-    <>
-      <NavBar showCartButton={showCartButton} notifica_Car={notifica_Car} /> {/* Pasar el estado y notifica_Car a NavBar */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Header
-              data={{
-                carrito,
-                setCarrito,
-                productos,
-                setProductos,
-                endPoint,
-                setEndPoint,
-                cargadoData,
-              }}
-            />
-          }
-        />
-        <Route path="/dashboard" element={<Admin />} />
-        <Route
-          path="/details/:productoid"
-          element={<DetailsProducto setShowCartButton={setShowCartButton} />} // Pasar el setState a DetailsProducto
-        />
-        <Route path="/checkoutpage/:idcar" element={<CheckoutPage />} />
-      </Routes>
-      <Footer />
-    </>
-  );
-}
-
-export default App;
+export default About;

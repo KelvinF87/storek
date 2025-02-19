@@ -14,8 +14,8 @@ import ShoppingCartModal from "./ShoppingCartModal";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
-  { name: "Nosotros", href: "#", current: false },
-  { name: "Contacto", href: "#", current: false },
+  { name: "Nosotros", href: "/nosotros", current: false },
+  { name: "Contacto", href: "/contacto", current: false },
 ];
 
 function classNames(...classes) {

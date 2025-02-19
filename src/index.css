@@ -19,9 +19,10 @@
 	overflow-y: auto;
 	background-color:#f6f3f4 ;
 	justify-content: center;
-	flex-wrap: wrap;
-
-	
+	flex-wrap: wrap;	
+}
+.titulo{
+	color: rgb(185, 194, 18);
 }
 .card-img {
 	padding: 10px;
