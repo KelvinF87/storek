@@ -9,6 +9,7 @@ export default function ProductList({ onLogout }) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isOperationInProgress, setIsOperationInProgress] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 	const productsPerPage = 9;
 
 	useEffect(() => {
@@ -60,7 +61,13 @@ export default function ProductList({ onLogout }) {
 
 	const indexOfLastProduct = currentPage * productsPerPage;
 	const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-	const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+	// Filtrar productos en base al término de búsqueda
+	const filteredProducts = products.filter(product =>
+		product.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -68,7 +75,6 @@ export default function ProductList({ onLogout }) {
 
 	return (
 		<div className="min-h-screen bg-gray-100 relative">
-	
 			<header className="bg-white shadow">
 				<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between mt-auto items-center">
 					<h1 className="text-3xl font-bold text-gray-900">Product Dashboard</h1>
@@ -82,7 +88,13 @@ export default function ProductList({ onLogout }) {
 			</header>
 			<main>
 				<div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-				<input type="text" placeholder="Buscar..." className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+					<input
+						type="text"
+						placeholder="Buscar..."
+						className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 p-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
+					/>
 					<div className="px-4 py-6 sm:px-0">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
 							{currentProducts.map((product) => (
@@ -113,7 +125,7 @@ export default function ProductList({ onLogout }) {
 							))}
 						</div>
 						<div className="flex justify-between mt-4">
-							{data.length > productsPerPage && (
+							{filteredProducts.length > productsPerPage && (
 								<button
 									onClick={() => paginate(currentPage - 1)}
 									disabled={currentPage === 1}
@@ -122,10 +134,10 @@ export default function ProductList({ onLogout }) {
 									Previous
 								</button>
 							)}
-							{data.length > productsPerPage && (
+							{filteredProducts.length > productsPerPage && (
 								<button
 									onClick={() => paginate(currentPage + 1)}
-									disabled={indexOfLastProduct >= products.length}
+									disabled={indexOfLastProduct >= filteredProducts.length}
 									className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
 								>
 									Next
