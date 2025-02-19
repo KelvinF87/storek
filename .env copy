@@ -1,3 +1,4 @@
 VITE_URL_APIK = "http://localhost:3000"
 VITE_URL_APIR = ""
+VITE_MONEDA = "€"
 # quita el copy y dejalo solo .env, añade la variable de tu api en VITE_URL_APIR = " "
