@@ -1,14 +1,18 @@
+// src/Pages/CheckoutPage.jsx
 import React, { useEffect, useState } from "react";
 import { useAddCar } from "../Hooks/AddCar";
 import { useNavigate } from "react-router";
 import enviando from "../assets/Ok-enviado.gif";
 import { useProducts } from "../Hooks/useProducts";
 import { useDataFetch } from "../Hooks/DataImport";
-const MONEDA = import.meta.env.VITE_MONEDA
+
+const MONEDA = import.meta.env.VITE_MONEDA;
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const [showEnviando, setShowEnviando] = useState(false);
   const [error, setError] = useState(null);
+
   const {
     setDataCar,
     dataCar,
@@ -18,9 +22,9 @@ const CheckoutPage = () => {
     increaseQuantity,
     decreaseQuantity,
   } = useAddCar();
-  const { data, setData, loading, setLoading } = useDataFetch("productos");
-  const [total, setTotal] = useState(0);
 
+  const { data, setData, loading, setLoading, refetch } = useDataFetch("productos");
+  const [total, setTotal] = useState(0);
   const { updateProduct } = useProducts("productos");
 
   useEffect(() => {
@@ -28,17 +32,37 @@ const CheckoutPage = () => {
     // console.log("el total ", parseFloat(totalPagar));
   }, [totalPagar, dataCar]);
 
+  // useEffect para limpiar el error después de 3 segundos
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 3000); // 3000 milisegundos = 3 segundos
+
+      // Limpieza del temporizador si el componente se desmonta antes de que termine el tiempo
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   const pagar = async () => {
     setShowEnviando(true);
     setError(null);
-
     try {
-      // Actualizar la cantidad de cada producto en el carrito
+      // Refetchar los datos para obtener la información más actualizada
+      await refetch();
+
+      // Procesar el pago con los datos actualizados
       for (const product of dataCar) {
-        // Buscar el producto en los datos del servidor
+        // Buscar el producto en los datos actualizados
         const serverProduct = data.find((miData) => miData.id === product.id);
+        console.log("Cantidad que me queda ", serverProduct?.quantity);
 
         if (serverProduct) {
+          // Verificar si hay suficiente stock antes de restar
+          if (serverProduct.quantity < product.quantity) {
+            throw new Error(`No hay suficiente stock para el producto| ${serverProduct.name}.`);
+          }
+
           // Calcular la nueva cantidad restando la cantidad vendida
           const updatedQuantity = serverProduct.quantity - product.quantity;
 
@@ -50,47 +74,51 @@ const CheckoutPage = () => {
 
           // Enviar la actualización al servidor
           await updateProduct(updatedProduct);
+        } else {
+          throw new Error(`Producto con ID ${product.id} no encontrado.`);
         }
       }
 
       // Vaciar el carrito en el almacenamiento local
       localStorage.removeItem("LisCar");
-
       setTimeout(() => {
         setTotalPagar(0);
         setTotal(0);
         setDataCar([]);
         setShowEnviando(false);
-        navigate("/");
+        navigate("/"); // Redirigir al usuario después del pago
       }, 3500);
     } catch (err) {
-      setError("Error al procesar el pago. Por favor, inténtalo de nuevo.");
+      console.error(err);
+      setError(err.message || "Error al procesar el pago. Por favor, inténtalo de nuevo.");
       setShowEnviando(false);
     }
   };
 
   return (
     <div className="container-details">
+      {/* Indicador de Envío */}
       {showEnviando && (
-        <div className="enviando-pago">
-          <img src={enviando} alt="Enviando pago" />
+        <div className="enviando-pago flex justify-center items-center fixed inset-0 bg-black bg-opacity-50 z-40">
+          <img src={enviando} alt="Enviando pago" className="w-32 h-32" />
         </div>
       )}
+
+      {/* Banner de Error */}
       {error && (
-        <div className="error-message">
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-md z-50 transition-opacity duration-500 opacity-100">
           <p>{error}</p>
         </div>
       )}
+
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl relative">
           <h1 className="text-2xl font-semibold mb-6 text-center">Checkout</h1>
           <div className="mb-6">
             <h2 className="text-lg font-semibold mb-4">Información de Pago</h2>
             <form>
               <div className="mb-4">
-                <label className="block text-gray-700">
-                  Nombre en la Tarjeta
-                </label>
+                <label className="block text-gray-700">Nombre en la Tarjeta</label>
                 <input
                   type="text"
                   placeholder="Nombre en la tarjeta"
@@ -107,9 +135,7 @@ const CheckoutPage = () => {
               </div>
               <div className="mb-4 flex space-x-4">
                 <div className="w-1/2">
-                  <label className="block text-gray-700">
-                    Fecha de Expiración
-                  </label>
+                  <label className="block text-gray-700">Fecha de Expiración</label>
                   <input
                     type="text"
                     placeholder="MM/YY"
@@ -130,15 +156,20 @@ const CheckoutPage = () => {
           <div className="mb-6">
             <h2 className="text-lg font-semibold mb-4">Resumen del Pedido</h2>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-gray-700">Total: {total.toFixed(2)}{MONEDA}</p>
+              <p className="text-gray-700">
+                Total: {total.toFixed(2)} {MONEDA}
+              </p>
             </div>
           </div>
           <button
             type="button"
             onClick={pagar}
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={showEnviando} // Deshabilitar el botón mientras se procesa
+            className={`w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              showEnviando ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Confirmar Pago
+            {showEnviando ? "Procesando..." : "Confirmar Pago"}
           </button>
         </div>
       </div>
@@ -158,19 +189,20 @@ const CheckoutPage = () => {
                         className="h-full w-full object-cover"
                       />
                     </div>
-
                     <div className="ml-4 flex flex-1 flex-col">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>{product.name}</h3>
-                        <p className="ml-4">{product.price}{MONEDA}</p>
+                        <p className="ml-4">
+                          {product.price} {MONEDA}
+                        </p>
                       </div>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {product.color}
-                      </p>
-
+                      <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex items-center">
-                          <span className="mx-2">Cantidad: {product.quantity} x {product.price}{MONEDA} = {parseFloat(product.quantity) * parseFloat(product.price)}{MONEDA} </span>
+                          <span className="mx-2">
+                            Cantidad: {product.quantity} x {product.price} {MONEDA} ={" "}
+                            {(parseFloat(product.quantity) * parseFloat(product.price)).toFixed(2)} {MONEDA}
+                          </span>
                         </div>
                         <button
                           onClick={() => removeFromCart(product.id)}
