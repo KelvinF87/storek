@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import Admin from "./pages/Admin";
 import Contact from "./pages/Contacts";
 import Nosotros from "./pages/Nosotros";
+import Error404 from "./pages/PageError";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
 				<Route path="/details/:productoid"  element={<DetailsProducto/>} />
 				<Route path="/nosotros"  element={<Nosotros/>} />
 				<Route path="/contacto"  element={<Contact/>} />
+				<Route path="*"  element={<Error404/>} />
 			
 			</Routes>
 			<Footer />
