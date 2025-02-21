@@ -1,11 +1,30 @@
-# React + Vite
+Proyecto React + Vite
+Este proyecto proporciona una configuración mínima para ejecutar React en Vite con HMR (Hot Module Replacement) y reglas de ESLint para mantener el código limpio y ordenado.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plugins Oficiales Disponibles
+Actualmente, hay dos plugins oficiales disponibles para React con Vite:
 
-Currently, two official plugins are available:
+@vitejs/plugin-react: Utiliza Babel para Fast Refresh.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+@vitejs/plugin-react-swc: Utiliza SWC para Fast Refresh.
 
+Tecnologías Utilizadas
+Tailwind CSS: Para estilos rápidos y eficientes.
 
-Use Tailwind, css, react, vite, json.server, Render , Netlify.
+CSS: Para estilos personalizados.
+
+React: Biblioteca de JavaScript para construir interfaces de usuario.
+
+Vite: Herramienta de construcción rápida para proyectos modernos de JavaScript.
+
+JSON Server: Para crear una API falsa para el desarrollo.
+
+Render: Plataforma de despliegue en la nube.
+
+Netlify: Plataforma de despliegue y automatización para aplicaciones web.
+
+Propósito
+Esta aplicación tiene fines educativos y es completamente abierta. No me hago responsable del mal uso que se le pueda dar. Es una aplicación de comercio electrónico de código abierto.
+
+Autor
+Realizado por Kelvin José Familia.
