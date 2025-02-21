@@ -34,7 +34,7 @@ function App() {
 				});
 		};
 		getDataDb();
-	}, [productos,endPoint]);
+	}, []);
 	return (
 		<>
 			<NavBar />
