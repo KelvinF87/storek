@@ -19,6 +19,7 @@ export const useAddCar = () => {
 		// const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price.replace('$', '')) * item.quantity, 0);
 		const subtotal = dataCar.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
 		setTotalPagar(subtotal);
+		// console.log(dataCar)
 	}, [dataCar]);
 
 	const addToCart = (product) => {

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import {SumaCarContext}from '../context/sumaCar'
 import { useDataFetch } from "../Hooks/DataImport";
 import { Link } from "react-router-dom";
 import { useAddCar } from "../Hooks/AddCar";
@@ -12,6 +13,7 @@ export default function ListProduct() {
   const productsPerPage = 8;
   const [searchItem, setSearchItem] = useState("");
 
+  const {contCar, setConCar,acualizaCar}=useContext(SumaCarContext);
   useEffect(() => {
 	if (!loading && data) {
 	  setMiData(data);
@@ -24,31 +26,33 @@ export default function ListProduct() {
   );
   const ofertasDestacadas = (inicio,id) => {
    if (inicio.viewCount > 100) return true;
-     // Devuelve el conteo de los elementos filtrados
+	 // Devuelve el conteo de los elementos filtrados
 };
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handleAddToCart = (product) => {
-	addToCart({
-	  price: product.price,
-	  id: product.id,
-	  name: product.name,
-	  imageSrc: product.imageSrc,
-	  quantity: product.quantity,
-	  color: product.color,
-	  imageAlt: product.imageAlt,
-	  description: product.description,
-	  updatedAt: product.updatedAt,
-	  companyId: product.companyId,
-	  purchaseCount: product.purchaseCount,
-	  viewCount: product.viewCount,
-	});
-	setShowBanner(true);
-	setTimeout(() => {
-	  setShowBanner(false);
-	}, 2000);
+	  addToCart({
+		  price: product.price,
+		  id: product.id,
+		  name: product.name,
+		  imageSrc: product.imageSrc,
+		  quantity: product.quantity,
+		  color: product.color,
+		  imageAlt: product.imageAlt,
+		  description: product.description,
+		  updatedAt: product.updatedAt,
+		  companyId: product.companyId,
+		  purchaseCount: product.purchaseCount,
+		  viewCount: product.viewCount,
+		});
+		setShowBanner(true);
+		setTimeout(() => {
+			setShowBanner(false);
+			acualizaCar();
+		
+		}, 2000);
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);

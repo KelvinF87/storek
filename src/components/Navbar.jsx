@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import {SumaCarContext} from '../context/sumaCar'
 import { Link, useLocation } from "react-router-dom";
 import {
 	Disclosure,
@@ -23,7 +24,8 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-	const [contCar, setConCar] = useState(0);
+	const{contCar, setConCar, acualizaCar }=useContext(SumaCarContext)
+	// const [contCar, setConCar] = useState(0);
 	const [isCartOpen, setCartOpen] = useState(false);
 	const [cartKey, setCartKey] = useState(0);
 	const location = useLocation();

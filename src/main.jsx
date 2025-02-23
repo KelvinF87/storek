@@ -1,13 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
+import { SumaCarContextProvider } from "./context/sumaCar.jsx";
 
-createRoot(document.getElementById('root')).render(
-	<StrictMode>
-		<Router>
-		<App />			
-		</Router>
-	</StrictMode>,
-)
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Router>
+      <SumaCarContextProvider>
+        <App />
+      </SumaCarContextProvider>
+    </Router>
+  </StrictMode>
+);
